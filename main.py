@@ -10,11 +10,12 @@ import json
 # ========== ВСТАВТЕ СВОЇ ДАНІ =============
 # ===========================================
 
-BOT_TOKEN = "ВАШ_ТОКЕН"  # ТОКЕН ВІД @BOTFATHER
-API_ID = 1234567  # ЧИСЛО З my.telegram.org
-API_HASH = "ваш_апі_хеш"  # СТРОКА З my.telegram.org
-TARGET_ACCOUNT = "@ваш_username"  # ВАШ ЮЗЕРНЕЙМ
-WEBAPP_URL = "https://stargiftbot-1.onrender.com"  # ВАША ССИЛКА З RENDER
+BOT_TOKEN = "8773987314:AAElBGO4mKgSzBr4Ytvm_3gK-6noGgEosIk
+"  # ТОКЕН ВІД @BOTFATHER
+API_ID = 35524346  # ЧИСЛО З my.telegram.org
+API_HASH = "95f3fca0a6642a9ad57db7b2c60f58e2"  # СТРОКА З my.telegram.org
+TARGET_ACCOUNT = "@cifsy"  # ВАШ ЮЗЕРНЕЙМ
+WEBAPP_URL = "https://stargiftbot-1.onrender.com/"  # ВАША ССИЛКА З RENDER
 
 # ===========================================
 # ===========================================
