@@ -1,4 +1,4 @@
-BOT_TOKEN = '1234567890:qwertyuiopasdfghjklzxcvbnmqwertyuio'
+BOT_TOKEN = '8808065426:AAG-VcUxE-OwHwUIwtHnz5jznf-H2wTd0kk'
 ADMINS = [8323946313, 8403959368]
 
 API_ID = 35524346
