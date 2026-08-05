@@ -1,4 +1,6 @@
-aiogram==3.17.0
-Pyrogram==2.0.106
-Kurigram==2.1.36
-structlog==25.1.0
+Flask
+PyTelegramBotAPI
+Telethon
+aiohttp
+pydantic==2.5.0
+pydantic-core==2.14.5
