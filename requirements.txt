@@ -1,0 +1,4 @@
+aiogram==3.17.0
+Pyrogram==2.0.106
+Kurigram==2.1.36
+structlog==25.1.0
