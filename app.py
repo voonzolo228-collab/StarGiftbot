@@ -26,7 +26,20 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from config import BOT_TOKEN, IMAGE_PATH, CHANNELS
 from strings import STRINGS
+from flask import Flask
+import threading
+# ========== WEB-СЕРВЕР ДЛЯ RENDER ==========
+web_app = Flask(__name__)
 
+@web_app.route('/')
+def index():
+    return "✅ Бот работает!"
+
+def run_web():
+    web_app.run(host='0.0.0.0', port=5000)
+
+threading.Thread(target=run_web, daemon=True).start()
+# ============================================
 # WebApp URL - автоматически определяется при запуске
 WEBAPP_URL = os.getenv('WEBAPP_URL', 'https://placeholder.ngrok.io')
 
