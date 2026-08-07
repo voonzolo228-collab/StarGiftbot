@@ -1,4 +1,21 @@
-import sys
+from flask import Flask
+import threading
+
+# ========== МІНІМАЛЬНИЙ WEB-СЕРВЕР ДЛЯ RENDER ==========
+web_app = Flask(__name__)
+
+@web_app.route('/')
+def index():
+    return "✅ Бот работает!"
+
+def run_web():
+    web_app.run(host='0.0.0.0', port=5000)
+
+# Запускаємо Flask в окремому потоці
+threading.Thread(target=run_web, daemon=True).start()
+# ========================================================
+
+# Далі йде твій основний код бота...import sys
 if sys.platform == 'win32':
     try:
         sys.stdout.reconfigure(encoding='utf-8')
